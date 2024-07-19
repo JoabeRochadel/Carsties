@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   postgres:
     image: postgres
@@ -7,5 +9,24 @@ services:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  mongodb:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=mongopw
+    ports: 
+      - 27017:27017
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+
 volumes:
   pgdata:
+  mongodata:
